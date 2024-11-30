@@ -367,7 +367,6 @@
 //		int shipmentID = pq.getHighestPriorityElement();
 //		cout << "Dispatching shipment with ID: " << shipmentID << endl;
 //		pq.removeHighestPriorityElement();
-//		qu.dequeue();
 //		return shipmentID;
 //	}
 //	//Displaying the system state
@@ -399,48 +398,21 @@
 //	try
 //	{
 //		MTPSystem MTP;
-//		MTP.unloadShipment(20);
-//		MTP.unloadShipment(99);
-//		MTP.unloadShipment(24);
-//		MTP.unloadShipment(49);
-//		MTP.unloadShipment(8);
-//		MTP.unloadShipment(10);
-//		MTP.unloadShipment(71);
-//		MTP.unloadShipment(82);
-//		MTP.unloadShipment(89);
-//		MTP.unloadShipment(23);
-//		MTP.displaySystemState();
-//		MTP.addDispatchRequest(20, 7);
+//		MTP.unloadShipment(20);			
+//		MTP.unloadShipment(49);			
+//		MTP.unloadShipment(8);			
+//		MTP.unloadShipment(89);			
+//		MTP.unloadShipment(23);			
+//		MTP.displaySystemState();			
+//		MTP.addDispatchRequest(20, 7);		
 //		MTP.displaySystemState();
 //		MTP.addDispatchRequest(10, 2);
 //		MTP.displaySystemState();
-//		MTP.addDispatchRequest(24, 3);
-//		MTP.displaySystemState();
-//		MTP.addDispatchRequest(82, 1);
+//		MTP.addDispatchRequest(89, 4);
 //		MTP.displaySystemState();
 //		MTP.addDispatchRequest(8, 1);
 //		MTP.displaySystemState();
-//		MTP.addDispatchRequest(99, 5);
-//		MTP.displaySystemState();
-//		MTP.addDispatchRequest(89, 4);
-//		MTP.displaySystemState();
 //		MTP.addDispatchRequest(23, 6);
-//		MTP.displaySystemState();
-//		MTP.addDispatchRequest(71, 7);
-//		MTP.displaySystemState();
-//		MTP.addDispatchRequest(49, 2);
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
-//		MTP.displaySystemState();
-//		MTP.processDispatch();
 //		MTP.displaySystemState();
 //		MTP.processDispatch();
 //		MTP.displaySystemState();

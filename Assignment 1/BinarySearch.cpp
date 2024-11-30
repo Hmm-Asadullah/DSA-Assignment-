@@ -236,7 +236,7 @@
 //        }
 //    }
 //};
-// Main function to test the BinarySearch class and measure execution times.
+// //Main function to test the BinarySearch class and measure execution times.
 //int main()
 //{
 //    try
@@ -253,18 +253,16 @@
 //            list.addToTail(i + 1); // Create a sorted linked list of size 100.
 //        }
 //        // Measure and display the execution time of binary search on array and linked list.
-//        cout << "Array";
-//        bs.analyzeExecutionTime("array", 100, 50);
+//        cout << "Execution time for Array";
 //        cout << "\n";
 //        bs.analyzeExecutionTime("array", 100, 50);
+//        bs.analyzeExecutionTime("array", 1000, 500);
+//        bs.analyzeExecutionTime("array", 10000, 5000);
+//        cout << "\nExecution time for List";
 //        cout << "\n";
-//        bs.analyzeExecutionTime("array", 100, 30);
-//        cout << "List";
 //        bs.analyzeExecutionTime("list", 100, 50);
-//        cout << "\n";
-//        bs.analyzeExecutionTime("list", 100, 50);
-//        cout << "\n";
-//        bs.analyzeExecutionTime("list", 100, 30);
+//        bs.analyzeExecutionTime("list", 1000, 500);
+//        bs.analyzeExecutionTime("list", 10000, 5000);
 //    }
 //	catch(const char* except)
 //	  {
