@@ -236,32 +236,39 @@
 //        }
 //    }
 //};
-//// Main function to test the BinarySearch class and measure execution times.
+// Main function to test the BinarySearch class and measure execution times.
 //int main()
 //{
-//    BinarySearch<int> bs;
-//    SLList<int> list;
-//    int arr[100];
-//    for (int i = 0; i < 100; i++)
+//    try
 //    {
-//        arr[i] = i + 1; // Create a sorted array of size 100.
+//        BinarySearch<int> bs;
+//        SLList<int> list;
+//        int arr[100];
+//        for (int i = 0; i < 100; i++)
+//        {
+//            arr[i] = i + 1; // Create a sorted array of size 100.
+//        }
+//        for (int i = 0; i < 100; i++)
+//        {
+//            list.addToTail(i + 1); // Create a sorted linked list of size 100.
+//        }
+//        // Measure and display the execution time of binary search on array and linked list.
+//        cout << "Array";
+//        bs.analyzeExecutionTime("array", 100, 50);
+//        cout << "\n";
+//        bs.analyzeExecutionTime("array", 100, 50);
+//        cout << "\n";
+//        bs.analyzeExecutionTime("array", 100, 30);
+//        cout << "List";
+//        bs.analyzeExecutionTime("list", 100, 50);
+//        cout << "\n";
+//        bs.analyzeExecutionTime("list", 100, 50);
+//        cout << "\n";
+//        bs.analyzeExecutionTime("list", 100, 30);
 //    }
-//    for (int i = 0; i < 100; i++)
-//    {
-//        list.addToTail(i + 1); // Create a sorted linked list of size 100.
+//	catch(const char* except)
+//	  {
+//		  cout << except;
 //    }
-//    // Measure and display the execution time of binary search on array and linked list.
-//    cout << "Array";
-//    bs.analyzeExecutionTime("array", 100, 50);
-//    cout << "\n";
-//    bs.analyzeExecutionTime("array", 100, 50);
-//    cout << "\n";
-//    bs.analyzeExecutionTime("array", 100, 30);
-//    cout << "List";
-//    bs.analyzeExecutionTime("list", 100, 50);
-//    cout << "\n";
-//    bs.analyzeExecutionTime("list", 100, 50);
-//    cout << "\n";
-//    bs.analyzeExecutionTime("list", 100, 30);
-//    return 0;
+//  return 0;
 //}

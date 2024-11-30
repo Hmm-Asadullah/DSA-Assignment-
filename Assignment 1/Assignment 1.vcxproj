@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomerList.cpp" />
+    <ClCompile Include="ExpressionEvaluation.cpp" />
     <ClCompile Include="WareHouseSystem.cpp" />
     <ClCompile Include="BinarySearch.cpp" />
   </ItemGroup>
