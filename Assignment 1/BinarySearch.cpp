@@ -1,5 +1,8 @@
 #include<iostream>
+#include<chrono>
+#include<string>
 using namespace std;
+using namespace chrono;
 template<typename T>
 struct Node
 {
@@ -209,6 +212,37 @@ public:
 		}
 		return false;
 	}
+	void analyzeExecutionTime(string structureType, int inputSize, T key)
+	{
+		if (structureType == "array")
+		{
+			int* arr = new T[inputSize];
+			for (int i = 0; i < inputSize; i++)
+			{
+				arr[i] = i + 1;
+			}
+			BinarySearch<int> bs;
+			time_point<high_resolution_clock> start, end;
+			start = high_resolution_clock::now();
+			bs.searchArray(arr, inputSize, key);
+			end = high_resolution_clock::now();
+			cout << endl << fixed << "Time in nanoseconds: " << duration_cast<nanoseconds>(end - start).count() << endl;
+		}
+		else if (structureType == "list")
+		{
+			SLList<T> list{};
+			for (int i = 0; i < inputSize; i++)
+			{
+				list.addToTail(i + 1);
+			}
+			BinarySearch<int> bs;
+			time_point<high_resolution_clock> start, end;
+			start = high_resolution_clock::now();
+			bs.searchLinkedList(list.getHead(), key);
+			end = high_resolution_clock::now();
+			cout << endl << fixed << "Time in nanoseconds: " << duration_cast<nanoseconds>(end - start).count() << endl;
+		}
+	}
 };
 int main()
 {
@@ -223,7 +257,21 @@ int main()
 	{
 		list.addToTail(i + 1);
 	}
-	cout << bs.searchArray(arr, 100, 10);
+	/*cout << bs.searchArray(arr, 100, 10);
 	cout << "\n";
 	cout << bs.searchLinkedList(list.getHead(), 0);
+	cout << "\n";*/
+	cout << "Array";
+	bs.analyzeExecutionTime("array", 100, 50);
+	cout << "\n";
+	bs.analyzeExecutionTime("array", 100, 50);
+	cout << "\n";
+	bs.analyzeExecutionTime("array", 100, 30);
+	cout << "List";
+	bs.analyzeExecutionTime("list", 100, 50);
+	cout << "\n";
+	bs.analyzeExecutionTime("list", 100, 50);
+	cout << "\n";
+	bs.analyzeExecutionTime("list", 100, 30);
+	return 0;
 }
