@@ -138,15 +138,15 @@ int main()
 		cout << "Enter Infix expression: ";
 		getline(cin, exp);
 		cout << "Initial Infix Expression: " << exp;
-		string prefix= infixToPrefix(exp);
-		string postfix= infixToPostfix(exp);
+		//string postfix= infixToPostfix(exp);
+		/*string prefix= infixToPrefix(exp);
 		cout << "\nPostfix Expression: " << postfix;
 		cout << "\nPrefix Expression: " << prefix;
 		cout << "\nPostfix Expression: " << prefixToPostfix(prefix);
-		cout << "\nPrefix Expression: " << postfixToPrefix(postfix);
+		cout << "\nPrefix Expression: " << postfixToPrefix(postfix);*/
+		cout << "\n" << boolalpha << validateExpression(exp, "prefix");
+		cout << "\n" << boolalpha << validateExpression(exp, "postfix");
 		cout << "\nEvaluated Expression: " << evaluateExpression(exp);
-		cout << "\n" << boolalpha << validateExpression(prefix, "prefix");
-		cout << "\n" << boolalpha << validateExpression(postfix, "postfix");
 		cout << "\nExpression Type: " << determineExpressionType(exp);
 	}
 	catch (const char* except)
@@ -154,58 +154,6 @@ int main()
 		cout << except;   //exception caught and displayed
 	}
 	return 0;
-}
-// checks whether the expression is prefix or not 
-bool isPrefix(string exp)
-{
-	int operators = 0, operands = 0;
-	for (int i = exp.length(); i >= 0; i--)
-	{
-		if (isOperand(exp[i]))
-		{
-			do
-			{
-				i--;
-			} while (i < exp.length() && isOperand(exp[i]));
-			i++;
-			operands++;
-		}
-		else if (isOperator(exp[i]) || isLogicalOp(exp[i]))
-		{
-			operators++;
-		}
-		if (operators >= operands)
-		{
-			return false;
-		}
-	}
-	return operands == operators + 1;
-}
-// checks whether the expression is postfix or not
-bool isPostfix(string exp)
-{
-	int operators = 0, operands = 0;
-	for (int i = 0; i < exp.length(); i++)
-	{
-		if (isOperand(exp[i]))
-		{
-			do
-			{
-				i++;
-			} while (i < exp.length() && isOperand(exp[i]));
-			i--;
-			operands++;
-		}
-		else if (isOperator(exp[i]) || isLogicalOp(exp[i]))
-		{
-			operators++;
-		}
-		if (operands <= operators)
-		{
-			return false;
-		}
-	}
-	return operands == operators + 1;
 }
 //converts the expression from prefix to postfix
 string prefixToPostfix(string prefix)
@@ -269,134 +217,229 @@ string postfixToPrefix(string postfix)
 //evaluates the given expression
 int evaluateExpression(string s)
 {
-	s = infixToPostfix(s); //converison from infix to postfix  
-	Stack<int> exp{ (int)s.length() }; // A stack to store the operands 
-	for (int i = 0; i < s.length(); i++)
+	if (isPrefix(s))
 	{
-		int result = 0;
-		if (isOperator(s[i]) || isLogicalOp(s[i])) //if the charachter is operator pop the first two charachter from stack
-		{											//and push them back after performing the operation 
-			if (!exp.isEmpty())
-			{
-				int first = exp.pop(), sec = exp.pop();
-				if (s[i] == '+')
+		Stack<int> exp{ (int)s.length() }; // A stack to store the operands 
+		for (int i = s.length() - 1; i >= 0; i--)
+		{
+			int result = 0;
+			if (isOperator(s[i]) || isLogicalOp(s[i])) //if the charachter is operator pop the first two charachter from stack
+			{											//and push them back after performing the operation 
+				if (!exp.isEmpty())
 				{
-					exp.push(sec + first);
-				}
-				else if (s[i] == '-')
-				{
-					exp.push(sec - first);
-				}
-				else if (s[i] == '*')
-				{
-					exp.push(sec * first);
-				}
-				else if (s[i] == '/')
-				{
-					if (!first)
-						throw "\nInvalid division i.e by zero";
-					exp.push(sec / first);
-				}
-				else if (s[i] == '^')
-				{
-					exp.push(calcPower(sec, first));
-				}
-				else if (s[i] == '%')
-				{
-					if (!first)
-						throw "\nInvalid division i.e by zero"; // division by zero exception thrown
-					exp.push(sec % first);
-				}
-				else if (s[i] == '&') //evaluates to true if both the operands are non zero
-				{
-					if (first != 0 && sec != 0)
+					int sec = exp.pop(), first = exp.pop();
+					if (s[i] == '+')
 					{
-						exp.push(1);
+						exp.push(sec + first);
 					}
-					else
+					else if (s[i] == '-')
 					{
-						exp.push(0);
+						exp.push(sec - first);
 					}
-				}
-				else if (s[i] == '|') //evaluates to false if any of the operand is non zero
-				{
-					if (first != 0 || sec != 0)
+					else if (s[i] == '*')
 					{
-						exp.push(1);
+						exp.push(sec * first);
 					}
-					else
+					else if (s[i] == '/')
 					{
-						exp.push(0);
+						if (!first)
+							throw "\nInvalid division i.e by zero"; // invalid division exception thrown
+						exp.push(sec / first);
+					}
+					else if (s[i] == '^')
+					{
+						exp.push(calcPower(sec, first));   // funtion to calculate power of an operand
+					}
+					else if (s[i] == '%')
+					{
+						if (!first)
+							throw "\nInvalid division i.e by zero"; // division by zero exception thrown
+						exp.push(sec % first);
+					}
+					else if (s[i] == '&') //evaluates to true if both the operands are non zero
+					{
+						if (first != 0 && sec != 0)
+						{
+							exp.push(1);
+						}
+						else
+						{
+							exp.push(0);
+						}
+					}
+					else if (s[i] == '|') //evaluates to false if any of the operand is non zero
+					{
+						if (first != 0 || sec != 0)
+						{
+							exp.push(1);
+						}
+						else
+						{
+							exp.push(0);
+						}
 					}
 				}
 			}
+			else if (s[i] >= '0' && s[i] <= '9') // if the charachter is operand extract every digit of the number 
+			{									// from the expression, convert it into a number and push it into the stack
+				int num = 0;
+				do
+				{
+					num = (num * 10) + (s[i] - '0');
+					i--;
+				} while (i >= 0 && isOperand(s[i]));
+				i++;
+				exp.push(num);
+			}
 		}
-		else if (s[i] >= '0' && s[i] <= '9') // if the charachter is operand extract every digit of the number 
-		{									// from the expression, convert it into a number and push it into the stack
-			int num = 0;
+		if (!exp.isEmpty())
+			return exp.pop(); // return the only number left in the stack
+	}
+	else if (isPostfix(s))
+	{
+		Stack<int> exp{ (int)s.length() }; // A stack to store the operands 
+		for (int i = 0; i < s.length(); i++)
+		{
+			int result = 0;
+			if (isOperator(s[i]) || isLogicalOp(s[i])) //if the charachter is operator pop the first two charachter from stack
+			{											//and push them back after performing the operation 
+				if (!exp.isEmpty())
+				{
+					int first = exp.pop(), sec = exp.pop();
+					if (s[i] == '+')
+					{
+						exp.push(sec + first);
+					}
+					else if (s[i] == '-')
+					{
+						exp.push(sec - first);
+					}
+					else if (s[i] == '*')
+					{
+						exp.push(sec * first);
+					}
+					else if (s[i] == '/')
+					{
+						if (!first)
+							throw "\nInvalid division i.e by zero";
+						exp.push(sec / first);
+					}
+					else if (s[i] == '^')
+					{
+						exp.push(calcPower(sec, first));
+					}
+					else if (s[i] == '%')
+					{
+						if (!first)
+							throw "\nInvalid division i.e by zero"; // division by zero exception thrown
+						exp.push(sec % first);
+					}
+					else if (s[i] == '&') //evaluates to true if both the operands are non zero
+					{
+						if (first != 0 && sec != 0)
+						{
+							exp.push(1);
+						}
+						else
+						{
+							exp.push(0);
+						}
+					}
+					else if (s[i] == '|') //evaluates to false if any of the operand is non zero
+					{
+						if (first != 0 || sec != 0)
+						{
+							exp.push(1);
+						}
+						else
+						{
+							exp.push(0);
+						}
+					}
+				}
+			}
+			else if (s[i] >= '0' && s[i] <= '9') // if the charachter is operand extract every digit of the number 
+			{									// from the expression, convert it into a number and push it into the stack
+				int num = 0;
+				do
+				{
+					num = (num * 10) + (s[i] - '0');
+					i++;
+				} while (i < s.length() && isOperand(s[i]));
+				i--;
+				exp.push(num);
+			}
+		}
+		if (!exp.isEmpty())
+			return exp.pop(); // return the only number left in the stack
+	}
+	else
+	{
+		throw "\nPlease enter prefix or postfix expression for evaluation";
+	}
+}
+// checks whether the expression is prefix or not 
+bool isPrefix(string exp)
+{
+	int count = 0;
+	for (int i = exp.length(); i >= 0; i--)
+	{
+		if (isOperand(exp[i]))
+		{
 			do
 			{
-				num = (num * 10) + (s[i] - '0');
-				i++;
-			} while (i < s.length() && isOperand(s[i]));
-			i--;
-			exp.push(num);
+				i--;
+			} while (i < exp.length() && isOperand(exp[i]));
+			i++;
+			count++;
+		}
+		else if (isOperator(exp[i]) || isLogicalOp(exp[i]))
+		{
+			if (count < 2)
+			{
+				return false;
+			}
+			count--;
 		}
 	}
-	return exp.pop(); // return the only number left in the stack
+	return (count == 1) ? true : false;
+}
+// checks whether the expression is postfix or not
+bool isPostfix(string exp)
+{
+	int operators = 0, operands = 0;
+	for (int i = 0; i < exp.length(); i++)
+	{
+		if (isOperand(exp[i]))
+		{
+			do
+			{
+				i++;
+			} while (i < exp.length() && isOperand(exp[i]));
+			i--;
+			operands++;
+		}
+		else if (isOperator(exp[i]) || isLogicalOp(exp[i]))
+		{
+			operators++;
+		}
+		if (operands <= operators)
+		{
+			return false;
+		}
+	}
+	return operands == operators + 1;
 }
 //validates the expression depend on its notation
 bool validateExpression(string expression, string notation) // validates the expression 
 {
 	if (notation == "postfix")
 	{
-		int count = 0;
-		for (int i = 0; i < expression.length(); i++)
-		{
-			if (isOperand(expression[i]))
-			{
-				do
-				{
-					i++;
-				} while (i < expression.length() && isOperand(expression[i]));
-				i--;
-				count++;
-			}
-			else if (isOperator(expression[i]) || isLogicalOp(expression[i]))
-			{
-				if (count < 2)
-				{
-					return false;
-				}
-				count--;
-			}
-		}
-		return count == 1 ? true : false;
+		return isPostfix(expression) ? true: false;
 	}
 	else if (notation == "prefix")
 	{
-		int count = 0;
-		for (int i = expression.length(); i >= 0; i--)
-		{
-			if (isOperand(expression[i]))
-			{
-				do
-				{
-					i--;
-				} while (i < expression.length() && isOperand(expression[i]));
-				i++;
-				count++;
-			}
-			else if (isOperator(expression[i]) || isLogicalOp(expression[i]))
-			{
-				if (count < 2)
-				{
-					return false;
-				}
-				count--;
-			}
-		}
-		return (count == 1) ? true : false;
+		return isPrefix(expression) ? true : false;
 	}
 	throw "\nExpression Invalid:";
 }
